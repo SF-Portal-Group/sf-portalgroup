@@ -1,0 +1,121 @@
+/************************************************************************/
+/*
+/*      GLOBAL STYLES
+/*
+/************************************************************************/
+
+body {
+    color: #5b5b5b;
+    font-family: Montserrat, sans-serif;
+    font-size: 16px;
+
+    /* Fixes issue where footer floats off the bottom if page is too short. */
+    min-height: 100vh;
+}
+
+body > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    flex-grow: 1;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button {
+    background-color: #dd2d85;
+    border: none;
+    border-radius: 100px;
+    color: #FFF;
+    font-weight: 500;
+    padding: 10px 16px;
+}
+
+.button:hover {
+    background-color: #000f02;
+}
+
+.footnote {
+    background-color: #000;
+}
+
+.footnote, .footnote a {
+    color: #FFF;
+}
+
+.footnote a:hover {
+    font-style: italic;
+    text-decoration: none;
+}
+
+.footer_row3 {
+    align-items: center;
+    display: flex;
+    gap: 30px;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 14px;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+
+
+/************************************************************************/
+/*
+/*      CATALOG
+/*
+/************************************************************************/
+
+.responsive_tabs-shell {
+    display: none;
+}
+
+.main-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#copy3, #copy2 {
+    /* Prevents the tab blurbs from acting like catalog items. */
+    flex-basis: 100%;
+}
+
+.stretchy_cols {
+    max-height: unset;
+}
+
+img.catalog-tiny-thumbnail {
+    height: 40px;
+}
+
+.responsive-longname {
+    font-family: Syne, sans-serif;
+    margin-bottom: 5px;
+}
+
+.responsive-choose-info {
+    margin-bottom: 5px;
+}
+
+
+
+/************************************************************************/
+/*
+/*      PORTAL-SPECIFIC
+/*
+/************************************************************************/
+
+.main-section {
+    column-gap: 30px;
+}
+
+.stretchy_cols {
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,1077 @@
+/* ************************** TABLE OF CONTENTS **************************
+
+  CUSTOM VARIABLES
+  GLOBAL
+  BUTTONS
+  INDEX
+  LOGIN
+  CATALOG
+  QUOTES/SIDE BY SIDE
+  MAIL MERGE
+  BASKET VIEW
+  DELIVERY METHODS
+  SHIPPING
+  BILLING
+  REVIEW
+  ACCEPT
+
+*********************************************************************** */
+
+/************************************************************************/
+/*
+/*      CUSTOM VARIABLES
+/*
+/************************************************************************/
+
+:root {
+    /* Site background header color */
+    --header-bkgd-color: #FFFFFF;
+    --header-link-bkgd-color: #990000;
+
+    /* Static site text header link color */
+    --header-link-txt-color: #898989;
+    --header-link-txt-color-hover: #CCCCCC;
+    --header-link-bkgd-color-hover: transparent;
+    --header-link-border-color-hover: #FFFFFF;
+
+    /* NOTE: Add html font url link source to Site-Wide Appearance > Site Header > Site Meta Data > Other Metdata */
+    --custom-font: 'Montserrat', sans-serif;
+
+    /* JESS CUSTOM CSS: FMB colours */
+    --global-color-primary: #15553B;
+    --global-color-secondary: #D3971C;
+    --global-color-accent: #EDDBAF;
+    --global-color-text: #282828;
+}
+
+
+
+/************************************************************************/
+/*
+/*      JESS CUSTOM CSS
+/*
+/************************************************************************/
+
+body {
+    color: var(--global-color-text);
+    font-family: Afacad, sans-serif;
+    font-size: 17px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.button {
+    background-color: var(--global-color-primary);
+    border: none;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-family: Lato, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    transition: 0.3s all ease-in-out;
+}
+
+input[type=text], select {
+    border-radius: 6px !important;
+    border: 1px solid #D0D5DD;
+    padding: 6px;
+}
+
+#submit_catalog_search_cancel, #submit_updatebasket, #button_addproducts {
+    background-color: var(--global-color-accent);
+    color: var(--global-color-text);
+}
+
+.button:hover, #submit_catalog_search_cancel:hover, #submit_updatebasket:hover, #button_addproducts:hover {
+    background-color: var(--global-color-secondary);
+    color: #FFFFFF;
+}
+
+.pagetitle {
+    color: var(--global-color-text);
+    font-family: Afacad, sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ****************************************** HEADER ******************************************* */
+
+#header-wrapper {
+    display: none;
+}
+
+.tabs-nav {
+    display: flex;
+    font-family: Lato, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 1.4px;
+    list-style: none;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+    text-transform: uppercase;
+}
+
+.tabs-nav > li {
+    margin: 0 30px;
+}
+
+.tabs-nav a {
+    color: var(--global-color-text);
+    display: flex;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+.tab-topmenu {
+    position: relative;
+}
+
+.tab-topmenu i {
+    margin-left: 5px;
+}
+
+.tab-submenu {
+    background-color: #FFFFFF;
+    display: block;
+    font-family: Afacad, sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    list-style: none;
+    margin: 15px 0 0;
+    min-width: 220px;
+    opacity: 0;
+    padding-inline-start: 0;
+    position: absolute;
+    text-transform: none;
+    top: 100%;
+    transition: 0.5s all ease-in-out;
+    visibility: hidden;
+    z-index: 9;
+}
+
+.tab-submenu a {
+    color: var(--global-color-secondary);
+    display: block;
+    padding: 7px 10px;
+    transition: 0.5s all ease-in-out;
+}
+
+/* ****************************************** FOOTER ******************************************* */
+
+.footnote {
+    background-color: var(--global-color-primary);
+    color: #FFFFFF;
+}
+
+.footer_row3 {
+    display: flex;
+    gap: 30px;
+    font-family: 'Noto Sans';
+    font-size: 14px;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+.footer_row3 a {
+    color: #FFFFFF;
+}
+
+/* ****************************************** CATALOG ****************************************** */
+
+#copy3, #copy2 {
+    flex-basis: 100%;
+}
+
+.catalog-tab-blurb {
+    text-align: center;
+}
+
+#refine_searchfield_input {
+    border-radius: 0;
+    outline: none;
+}
+
+.stretchy_cols.responsive-item {
+    min-width: 330px;
+    width: 300px;
+}
+
+.responsive-longname {
+    font-size: 17px;
+}
+
+.responsive-pricing {
+    font-family: Afacad, sans-serif;
+}
+
+/* **************************************** BASKET_VIEW **************************************** */
+
+.items-table th {
+    color: var(--global-color-text);
+    font-size: 17px;
+}
+
+.items-table td {
+    color: var(--global-color-text);
+    font-size: 17px;
+}
+
+/* ********************** EXTRA ELEMENTOR STYLES ********************** */
+
+.elementor-icon-box-title {
+    color: var(--global-color-text);
+    /* font-family: Afacad, sans-serif; */
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+
+
+/************************************************************************/
+/*
+/*      GLOBAL
+/*
+/************************************************************************/
+
+/* Remove sr_ error text from Basket, Review, Accept pages */
+.previewcell pre {
+    display: none;
+}
+
+/* Make Admin Menu Bar opaque to see the logo */
+.menu-knob-bar {
+    opacity: .8;
+}
+
+/* Sometimes on sites, you’ll see the catalog move down, then back up, 
+this will load cleaner */
+.catalog form {
+    overflow: visible !important;
+}
+
+.main {
+    margin-top: 30px;
+    margin: 20px auto 0 !important;
+}
+
+.select-items {
+    max-width: none !important;
+}
+
+/* CANCEL LINK */
+#footer\2e footercanceltext {
+    padding-right: 15px;
+}
+
+.pageinstructions {
+    width: 80%;
+    margin: 0 auto !important;
+    text-align: center;
+}
+
+/* Add border to preview image on Basket, Review, Accept pages */
+.previewcell img {
+    border: 1px solid #ccc !important;  
+}
+
+/* ****************************** HEADER ****************************** */
+
+h2.pagetitle, .pagetitle {
+    text-shadow: none;
+}
+
+#header-wrapper {
+    background-color: var(--header-bkgd-color);
+    background-image: var(--custom-header-image);
+    background-position: 50% 10%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.header { 
+    width: 100% !important;
+}
+
+#header_title img {
+    padding-top: 30px;
+    padding-right: 30px;
+}
+
+.header-links {
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    font-family: var(--custom-font);
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 6px 0;
+    text-decoration: none;
+}
+
+.header-links a {
+    color: var(--header-link-txt-color);
+    padding: 6px 10px;
+    text-decoration: none;
+}
+
+.header-links a:hover {
+    color: var(--header-link-txt-color-hover);
+    background-color: var(--header-link-bkgd-color-hover);
+    border: var(--header-link-border-color-hover) solid 1px;
+    padding: 6px 9px;
+}
+
+#logout_userid {
+    color: var(--header-link-txt-color);
+    padding: 0 15px;
+}
+
+/* Dropdown select and input text fields modification */
+input#passwd, input#passwd, textarea {
+    border-radius: 6px;
+    border: 1px solid #8A8D8F;
+    padding: 6px;
+}
+
+.form-body td.input {
+    vertical-align: middle;
+}
+
+/* ************************** CUSTOM HEADER *************************** */
+
+#logoHeader {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px auto;
+    padding: 15px 0;
+    width: 90%;
+}
+
+#logoHeader img {
+    width: 250px;
+}
+
+#searchWrapper {
+    display: none;
+    margin: 0px 100px 0px 200px;
+    width: 100%;
+}
+
+.search-flex {
+    display: flex;
+}
+
+.search-flex input {
+    border: 1px solid #666666;
+    border-radius: 0px;
+    flex-basis: 100%;
+    padding: 16px;
+}
+
+.head-search {
+    background-color: var(--global-color-primary);
+    border: none;
+    color: #FFFFFF;
+    font-family: Lato, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    line-height: 24px;
+    margin-left: 8px;
+    padding: 16px 10px;
+    text-transform: uppercase;
+}
+
+.head-search-toggle {
+    background-color: transparent;
+    border: none;
+    color: #005941;
+    font-size: 30px;
+    padding: 10px;
+}
+
+.head-search-toggle:hover {
+    color: #058260;
+}
+
+.tabs-header {
+    background-color: var(--global-color-accent);
+    padding: 15px 0;
+}
+
+
+
+
+
+.tabs-nav a:hover {
+    color: var(--global-color-primary);
+}
+
+
+
+.tab-topmenu:hover .tab-submenu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tab-submenu li:has(a:hover) {
+    background-color: var(--global-color-secondary);
+}
+
+
+
+.tab-submenu a:hover {
+    color: #FFFFFF;
+}
+
+
+
+/************************************************************************/
+/*
+/*      BUTTONS
+/*
+/************************************************************************/
+
+.main .buttonsbar button {
+    margin-bottom: 20px;
+}
+
+.button:hover .button .span:hover, .button .span {
+    color: #000000;
+}
+
+/* Arrow */
+button:hover span.button_arrow_right {
+    color: #000000;
+}
+
+/* Cancel Bbutton */
+#submit_cancel {
+    margin-right: 30px;
+}
+
+
+
+/************************************************************************/
+/*
+/*      INDEX
+/*
+/************************************************************************/
+
+.index-container {
+    margin: 20px 20px;
+    padding-bottom: 20px;
+    font-size: 14px;
+}
+
+
+
+/************************************************************************/
+/*
+/*      LOGIN
+/*
+/************************************************************************/
+
+.login, .login .message-block {
+    text-align: center !important;
+}
+
+
+
+/************************************************************************/
+/*
+/*      CATALOG
+/*
+/************************************************************************/
+
+/* Align carot icon with catalog tab name */
+.responsive_tabs .opened:before, .responsive_tabs .closed:before {
+    padding-top: 6px;
+}
+
+.select-items .vertical-shell {
+    margin-left: 10px!important;
+}
+
+.select-items .longname *, .select-items .longname * {
+    font-size: 14px;
+}
+
+.select-items .pagetitle {
+    margin-left: 10px !important;
+}
+
+.select-items .buttonsbar button {
+    margin-bottom: 20px;
+}
+
+#submit_catalog_add {
+    margin-top: 5px;
+}
+
+#copy4 {
+    display: none;
+}
+
+.bundle_subitem_preview img {
+    border: 1px solid gray;
+}
+
+.qtyspec_label {
+    margin-left: 5px !important;
+}
+
+.responsive_tabs-shell .after {
+    margin-top: 20px !important;
+}
+
+#basket-list-title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #333;
+    margin-bottom: 10px;
+}
+
+.basket-list-item {
+    margin-bottom: 10px !important;
+    font-size: 12px;
+}
+
+.basket-list-item .button {
+    padding: 1px 1px 1px 5px !important;
+}
+
+/* ****************************** BUNDLE ****************************** */
+
+.detail_text_wrapper {
+    width: 29%  !important;
+}
+
+.detail_tagcheck_wrapper {
+    width: 32% !important;
+    margin-top: 0px !important;
+}
+
+.bundle-qty-selection {
+    position: inherit !important;
+}
+
+.bundle-qty-selection .add-to-basket-qty-select {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.multi_preview a {
+    margin-right:5px;
+}
+
+.multi_preview a img {
+    margin-bottom: 5px;
+}
+
+.bundle_subitem_longname {
+    margin-bottom: 6px !important;
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 25px !important;
+}
+
+#d_tag_check input[type="text"] {
+    border-radius: 5px !important;
+    text-align: center;
+    padding: 5px;
+    border-style: groove;
+    font-weight: bold;
+    width: 100px !important;
+}
+
+.bundle_subitem_input {
+    position: relative;
+    top: 0px;
+    float: left;
+}
+
+.bundle_please_note {
+    color: red;
+    font-size: 15px;
+}
+
+.bundle_subitem {
+    width: 90% !important;
+    margin-left: 50px !important;
+}
+
+/* ************************** CUSTOM CATALOG ************************** */
+
+.responsive_tabs-shell {
+    display: none;
+}
+
+#all_items_view {
+    width: 100% !important; /* must be !important in order to override the... sigh... inline width >:( */
+}
+
+#all_items_view .main-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+
+
+/******************************** QUOTES/SIDE BY SIDE *********************************/
+
+/* QUOTES - CUSTOMIZE LABELS AND INPUT FIELDS  */
+.imprint .form-body td.label {
+    display: block;
+    text-align: left !important;
+    padding: 3px 0 0 6px !important;
+}
+
+.imprint .form-body td.input {
+    display: block;
+}
+
+.imprint .form-body td input {
+  width: 98%;
+  border-radius: 4px;
+  border: 1px solid #4d4d4d;
+  padding: 3px 2px;
+}
+
+.imprint .form-body td.input select {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #4d4d4d;
+  padding: 3px 2px;
+}
+
+#curr_item_image {
+  width: 300px;
+}
+
+
+
+
+/*-- START: LnF Quotes - #all_options and amenities --*/
+#curr_item_name {
+    font-size: 22px;
+}
+#all_options .label {
+    width: fit-content;
+    max-width: none;
+    font-size: 16px;
+}
+#all_options .label div {
+    display: inline;
+}
+#all_options tr {
+    display: block;
+    margin: 1rem 0;
+}
+#all_options td {
+    display: block;
+}
+#all_options td.input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#all_options tbody {
+    width: 300px;
+}
+#all_options input[type="text"] {
+    flex-basis: 80%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    margin-right: 0.5rem;
+    flex-grow: 1;
+}
+#all_options select {
+    flex-basis: 80%;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    margin-right: 0.5rem;
+    height: fit-content;
+    flex-grow: 1
+}
+#all_options .option_extra {
+    font-size:.85rem;
+    margin-top: 0px !important;
+}
+#all_options .option_extra .option_image {
+    left: 0;
+    bottom: 0;
+}
+#all_options .option_extra .option_image img {
+    width: 34px;
+}
+#all_options .estimate-total {
+    width: 100%;
+    font-size: .85rem;
+}
+
+div[id^="details_select"] > div:not(.option_detail) {
+        width: 35px !important;
+        height: 35px !important;
+        border-radius: 8px !important;
+}
+
+#all_options .option_extra .option_detail, #all_options .qtyspec_label {
+    padding-top: 4px;
+}
+
+#total_block #total_display {
+    font-size: 30px;
+    font-weight: bold;
+    background: #e1e1e1;
+    padding: 4px 10px;
+}
+
+#all_options, #all_options_container {
+    border: none !important;
+    margin-left: 30px;
+}
+/*-- END: LnF Quotes - #all_options and amenities --*/
+
+div.form-body div.title {
+    border-radius: 7px !important;
+}
+
+div.form-body div.title > h2 {
+    padding: 0px !important;
+}
+
+div.field-container {
+    border-bottom: 0px !important;
+}
+
+.buttonsbar, .form-body {
+  border-radius: 0px !important;
+}
+
+#estimate-item-container {
+  padding: 20px 0;
+}
+
+.submit.center button {
+  margin-bottom: 20px !important;
+}
+
+#all_options, #all_options_container {
+  border: none !important;
+}
+
+.fileSpec {
+  position: relative;
+  left: 10px;
+}
+
+.form-subheader {
+  text-align: left !important;
+}
+
+#approval_checkbox_group input * {
+  width: 100px;
+  height: auto;
+}
+
+.uploadIcon {
+  margin-top: 5px !important;
+}
+
+div#confirm_container button {
+  margin-top: 20px !important;
+}
+
+.checkbox-table {
+  margin-left: 0 !important;
+}
+
+
+/*********************************** MAIL MERGE ****************************************/
+
+
+.mail-merge header {
+  margin-left: 25px;
+}
+
+.mail-merge nav.submit {
+  padding-bottom: 30px !important;
+}
+
+#listimp-s3-section-5 div {
+  margin-left: 25px;
+}
+
+div.error {
+  margin-bottom: 10px;
+}
+
+#ml-handle-link {
+  margin-left: 25px;
+}
+
+.personal-list-actions {
+  text-align: center !important;
+}
+
+form[name='clientlist'] div:last-child {
+  padding: 20px 20px !important;
+}
+
+/********************************** BASKET VIEW ***************************************/
+
+.basket-view td.previewcell {
+  background-color: transparent !important;
+}
+
+.basket-view .buttonsbar button {
+  margin-bottom: 20px;
+}
+
+table:not(.items-table) {
+  width: auto;
+  margin: 0 auto;
+}
+
+/********************************* DELIVERY METHODS ***********************************/
+
+tr.dpt--headerRow, tr.dpt--headerRow span, tr.dpt--headerRow *, tr.item_row * {
+  font-size: 14px !important;
+}
+
+#i-dropship {
+  position: relative;
+  font-size: 14px;
+  color: #00000A;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  font-weight: normal;
+  padding: 4px 10px 4px 10px;
+  border: 1px solid #CCCCCC;
+  -moz-border-radius: 0em;
+  -webkit-border-radius: 0em;
+  border-radius: 0em;
+  background: #FFFFFF;
+  background: linear-gradient(#FFFFFF, #CCCCCC);
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#CCCCCC));
+  background: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+  background: -ms-linear-gradient(#FFFFFF, #CCCCCC);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#FFFFFF', endColorstr='#CCCCCC');
+  -pie-background: linear-gradient(#FFFFFF, #CCCCCC);
+  behavior: url(/hub/css/PIE.htc);
+}
+
+.mail-merge .buttonsbar, .mail-merge .buttonsbar a, .mail-merge .buttonsbar a:link, .mail-merge .buttonsbar * {
+  text-decoration: none !important;
+  text-align: center !important;
+}
+
+.mail-merge .buttonsbar {
+  margin-bottom: 10px;
+}
+
+tr.dpt--finalizeRow td.dpt--status {
+  border-bottom: 0px !important
+}
+
+/*********************************** SHIPPING *****************************************/
+.message-block{
+  text-align: center;
+}
+
+.mail-merge .pagetitle {
+  margin-left: 15px !important;
+}
+
+#see_shipping_methods {
+  position: relative;
+  font-size: 14px;
+  color: #00000A;
+  font-family: var(--custom-font), "Lucida Sans", "Trebuchet MS", "Arial";
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  font-weight: normal;
+  padding: 4px 10px 4px 10px;
+  border: 1px solid #CCCCCC;
+  -moz-border-radius: 0em;
+  -webkit-border-radius: 0em;
+  border-radius: 0em;
+  background: #FFFFFF;
+  background: linear-gradient(#FFFFFF, #CCCCCC);
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#CCCCCC));
+  background: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+  background: -ms-linear-gradient(#FFFFFF, #CCCCCC);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#FFFFFF', endColorstr='#CCCCCC');
+  -pie-background: linear-gradient(#FFFFFF, #CCCCCC);
+  behavior: url(/hub/css/PIE.htc);
+  max-width: 150px;
+  text-shadow: none!important;
+}
+
+.mail-merge .field-note {
+  display: none !important;
+}
+
+.mail-merge #throbber {
+  margin-bottom: 20px !important;
+}
+
+.mail-merge .field-container * {
+  color: #333333 !important;
+}
+
+label[for="comments"] {
+  position: relative;
+  bottom: 12px;
+}
+
+.shipping .form-body {
+  width: 80%;
+}
+
+form[action="shiptrack.cgi"] {
+  padding-bottom: 25px!important;
+}
+
+/************************************ BILLING *****************************************/
+
+.billing .pagetitle {
+  margin-left: 15px !important;
+}
+
+.billing .buttonsbar button {
+  margin-bottom: 20px;
+}
+
+.billing * {
+  font-size: 14px !important;
+}
+
+.billing .form-body {
+  width: 740px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.billing .form-body .input table {
+    margin-left: 0px;
+}
+
+/************************************* REVIEW *****************************************/
+
+.review .buttonsbar button {
+  margin-bottom: 20px;
+}
+
+.review .pageinstructions {
+  font-size: 14px;
+}
+
+.review td.data {
+  background-color: #eeeeee;
+}
+
+.review div {
+  margin: 0 10px;
+}
+
+.main p {
+  margin-left: 10px;
+}
+
+.accept-proofs table {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+/************************************* ACCEPT ******************************************/
+
+.done div *{
+  font-size: 14px;
+}
+
+.done td.data{
+  background-color: #eeeeee;
+}
+
+.done .accept-proofs .form-body{
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  width: 80%;
+}
+
+.done div {
+  margin: 10px; /*0 10px;*/
+}
+
+.catalog--container .pagetitle {
+  margin-top: 10px !important;
+}
+
+.accept-proofs  b{
+  margin-left: 20px;
+  margin-top: 10px;
+  line-height: 30px;
+}
+
+.previewcell a span {
+  position: relative;
+  font-size: 14px;
+  color: #00000A;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  font-weight: normal;
+  padding: 4px 10px 4px 10px;
+  border: 1px solid #CCCCCC;
+  -moz-border-radius: 0em;
+  -webkit-border-radius: 0em;
+  border-radius: 0em;
+  background: #FFFFFF;
+  background: linear-gradient(#FFFFFF, #CCCCCC);
+  background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#CCCCCC));
+  background: -moz-linear-gradient(top, #FFFFFF, #CCCCCC);
+  background: -ms-linear-gradient(#FFFFFF, #CCCCCC);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#FFFFFF', endColorstr='#CCCCCC');
+  -pie-background: linear-gradient(#FFFFFF, #CCCCCC);
+  behavior: url(/hub/css/PIE.htc);
+  margin: 5px 20px;
+}
+
+.previewcell a {
+  text-decoration: none;
+  margin: 0px auto;
+  line-height: 50px;
+  text-align: center;
+}
+
+.previewcell *{
+  text-align: center !important;
+}

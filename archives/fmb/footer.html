@@ -1,0 +1,605 @@
+<div class="footer_row3">
+    <div>
+        <img src="con/SF-PoweredBy2024-260w-White.png" alt="Online Storefront Powered by Strategic Factory" class="img-fluid mt-3">
+    </div>
+
+    <p class="footer_cr">
+        Strategic Factory<br>
+        11195 Dolfield Boulevard<br>
+        Owings Mills, Maryland 21117<br>
+        (443) 548-3500<br>
+        <a href="mailto:sfportalorders@strategicfactory.com">sfportalorders@strategicfactory.com</a>
+    </p>
+</div>
+
+<style>
+    /* ***************************************************************************************** */
+    /*
+    /*      CATALOG
+    /*
+    /* ***************************************************************************************** */
+
+    body {
+        overflow-x: hidden !important;
+    }
+
+    .stretchy_cols {
+        overflow: visible;
+    }
+
+    .image-container {
+        /* Better practice to put margin here, not on each individual multi-preview thumbnail. */
+        margin-bottom: 5px;
+    }
+    
+    .image-wrapper {
+        align-items: center;
+        display: flex;
+        height: 200px;
+        position: relative;
+    }
+
+    .image-wrapper img {
+        border: 1px solid #CCC;
+        /* Prepares for zoom handling. */
+        cursor: zoom-in;
+        transition: transform 0.25s;
+        /* Scales the image down while keeping the aspect ratio. */
+        max-height: 200px;
+        object-fit: scale-down;
+        width: auto;
+    }
+
+    .zoomed {
+        cursor: zoom-out !important;
+        left: 0;
+        position: absolute;
+        right: 0;
+        transform: scale(2);
+        z-index: 200;
+    }
+
+    .multi_preview a img {
+        /* Removes the poorly located margin under the thumbnails. */
+        margin-bottom: 0;
+    }
+
+    .catalog-tiny-thumbnail {
+        /* Sets the height of the multi-preview thumbnails. */
+        height: 40px !important;
+    }
+
+    .responsive-longname label {
+        /* Overrides mobile setting that hides long titles. */
+        white-space: initial !important;
+    }
+
+    .responsive-choose-info {
+        /* Overrides broken "webkit-box" property that prevents sizing properties from applying. */
+        display: block;
+        /* Stops hiding long product descriptions. */
+        max-height: 5.6rem;
+        overflow-y: auto;
+    }
+
+    .responsive-choose-info span {
+        /* Stops flex container from overflowing. */
+        max-height: 5.6rem;
+    }
+
+    .add-to-basket-qty-select select {
+        /* Gives the selects the same amount of breathing room as the text inputs. */
+        min-width: 69px;
+    }
+
+    #button_addproducts {
+        /* Hides the "Add More Products" button on the cart and shipping pages. */
+        display: none;
+    }
+
+    tr:has(#bill\.cc_type_label) {
+        display: none;
+    }
+
+    .attention {
+        /* Hides the little red asterisks next to the credit card payment fields. */
+        display: none;
+    }
+</style>
+
+<script>
+    /**
+     * Miscellaneous HTML and CSS improvements.
+     */
+    function prepare() {
+        // Removes the media query from the header CSS link so it can apply to all screen sizes.
+        $("link[href^='css/header.css']").removeAttr("media");
+
+        // On the basket and shipping pages, center-aligns all the table fields except the "Items" column.
+        $(".items-table.true-table th:not(:first-child), .items-table.true-table td:not(:first-child), #shipping-pricetable th:not(:first-child), #shipping-pricetable td:not(:first-child)")
+            .removeClass("left right")
+            .addClass("center");
+
+        // On the billing page, center-aligns only the "Items" column header.
+        $("#billing-pricetable th:first-child").removeClass("left").addClass("center");
+
+        // Makes the total price column shorter and bumps the last row to the right.
+        $("#billing-pricetable .totalinpcol").attr("colspan", "1");
+        $(".updatetotalcol").removeClass("input");
+        $("<td>").insertBefore( $("#billing-pricetable .updatetotalcol") );
+    }
+
+    /**
+     * Adds 3 favicon sizes/types to the head.
+     * If only one value is passed in, it will be used for all 3 icons.
+     */
+    function addFavicons(size32, size192=size32, appleTouch=size192) {
+        $("head").append(`<link rel="icon" href="con/${size32}" sizes="32x32" />`);
+        $("head").append(`<link rel="icon" href="con/${size192}" sizes="192x192" />`);
+        $("head").append(`<link rel="apple-touch-icon" href="con/${appleTouch}" />`);
+    }
+
+    /**
+     * Sets the minimum height of all selected items to be equal to the height of the tallest one.
+     */
+    function setMinHeight(selector) {
+        maxH = 0;
+
+        $(selector).each(function() {
+            if ($(this).height() > maxH) {
+                maxH = $(this).height();
+            }
+        });
+
+        if (maxH > 0) {
+            maxH += 1;
+        }
+
+        maxH = maxH + "px";
+        $(selector).css("min-height", maxH);
+    }
+    
+    /**
+     * Makes all catalog products the same height.
+     */ 
+    function equalizeItemHeights() {
+        // Wrap item imgs and thumbnails for sizing
+        $('.image-container:not(:has(>.multi_preview))').append('<div class="multi_preview"></div>');
+
+        // If any of the products on the current page have multiple thumbnails,
+        // adds the current image as a thumbnail to the ones that don't.
+        if ( $(".multi_preview").find("img").length != 0 ) {
+            $(".multi_preview:not(:has(img))").each(function() {
+                let url = $(this).siblings(".image-wrapper").find("img").attr("src");
+                $(this).append(`<img class="catalog-tiny-thumbnail" src="${url}" />`);
+            });
+        }
+
+        $(".height-adjuster").each(function() {
+            let wrapper = $(`<div class="item-info-wrapper">`).insertBefore( $(this).find(".responsive-pricing").first() );
+            $(this).find(".responsive-pricing, .responsive-onhand").appendTo(wrapper);
+        });
+
+        setMinHeight(".image-wrap");
+        setMinHeight(".multi_preview");
+        setMinHeight(".responsive-longname");
+        setMinHeight(".responsive-choose-info");
+        // setMinHeight(".responsive-pricing");
+        // setMinHeight(".responsive-onhand");
+        setMinHeight(".item-info-wrapper");
+        setMinHeight(".responsive-tagcheck");
+    }
+
+    /**
+     * Moves tabs from the left-side container to a navbar at the top of the page.
+     */
+    function moveTabsTop() {
+        // $("div.responsive_tabs-shell").show();  /*** Only for testing; Show the old Tabs ***/
+        // $(".tab_html_wrapper").show();  /*** Only for testing; Show the old Tabs ***/
+        // $(".responsive_tabs-shell .before").show();  /*** Only for testing; Show the old Tabs ***/
+        // $("div#basket-list-title").show();  /*** Only for testing; Show the old Tabs ***/
+
+        $( "#header-wrapper" ).after('<div id="TabsDiv"><nav id="TabsNav"><ul id="TabsMenu">'); /** Create the top nav place holder **/
+
+        var tabid = '';
+        var appendid = '';
+
+        $('#tab_responsive_tabs [id^="tab_"]').each(function() {
+            /**** Top most tabs menu item ****/
+            if ($("#TMul_" + $(this).attr("id")).length > 0 ) {
+                return true;
+            } /*** if it has already been created then skip to next ***/
+
+            //console.log( "TOP - " + $(this).find("dfn").first().text() + " : " + $(this).attr("id") + " | " + $(this).find("dfn").length );
+
+            appendid = 'TabsMenu';
+            tabid = $(this).attr("id");
+
+            if ($(this).find("dfn").length == 1) {
+                $("#" + appendid).append( '<li class="onlyli" id="TMli_' + tabid + '">' + $(this).find("dfn").first().html() + '</li>' ); /**** Top most menu link with no sub items ****/
+            } else {
+                $("#" + appendid).append( '<li class="topli" id="TMli_' + tabid + '">' + $(this).find("dfn").first().text() + '<ul id="TMul_' + tabid + '"></ul></li>' ); /*Top most menu with sub items*/
+            }
+
+            /**** Sub tabs menu items ****/
+            $(this).children().find('dfn').each(function () {
+                //console.log( "---- " + $(this).text() + " == " + $(this).parents('div [id^="tab_"]').parents('div [id^="tab_"]').attr("id") + " /// " + $(this).parents('div [id^="tab_"]').first().attr("id") + " || " + $(this).is(":last-child") );
+
+                if ($(this).is(":last-child")) {
+                    appendid = 'TMul_' + $(this).parents('div [id^="tab_"]').first().attr("id");
+                    tabid = $(this).parents('div [id^="tab_"]').parents('div [id^="tab_"]').attr("id");
+
+                    if (tabid == 'tab_responsive_tabs') {
+                        tabid = 'TabsMenu';
+                    }
+
+                    $("#" + appendid).append( '<li class="subtab">' + $(this).html() + '</li>' ); /**** All sub item links ****/
+                } else {
+                    tabid = $(this).parents('div [id^="tab_"]').first().attr("id");
+
+                    if (tabid == 'tab_responsive_tabs') {
+                        tabid = 'TabsMenu';
+                    }
+
+                    appendid = 'TMul_' + $(this).parents('div [id^="tab_"]').parents('div [id^="tab_"]').attr("id");
+                    $("#" + appendid).append( '<li class="subtopli" id="MMli_' + tabid + '">' + $(this).text() + '<ul id="TMul_' + tabid + '"></ul></li>' ); /**** Middle menu with sub items ****/
+                }
+            });
+        });
+
+        // Hide "LandingPage" tab
+        $( "li.onlyli:contains('LandingPage')" ).css( "display", "none" );
+        $( ".toptabs:contains('undefined')" ).hide();  /** if on a page that tabs are not exposed, hide the place holders. **/
+
+        //Jake Boyd This section moves the logo to the TabsDiv for a better structured responsive design
+        if ($('#desklogo').length && $('#TabsDiv').length) {
+            $('#desklogo').prependTo('#TabsDiv');
+        }
+    }
+    function moveTabsTopFMB() {
+        // Creates the header containers.
+        $("#header-wrapper").after('<div class="tabs-header"><nav><ul class="tabs-nav" id="tabsNav">');
+        $("#header-wrapper").after('<div id="logoHeader">');
+        
+        // Iterates over the top-level tabs in the original tab container.
+        $('#tab_responsive_tabs [id^="tab_"]').each(function() {
+            let tabID = $(this).attr("id");
+
+            // If the tab has no sub-items, add it to the nav as a link.
+            if ( $(this).find("dfn").length == 1 ) {
+                $("#tabsNav").append(`<li>${ $(this).find("dfn").first().html() }</li>`);
+            }
+
+            // If it does have sub-items, add it to the nav as a hoverable container.
+            else {
+                $("#tabsNav").append(`
+                    <li class="tab-topmenu">
+                        <a>
+                            <span>${ $(this).find("dfn").first().text() }</span>
+                            <i class="fa fa-sort-desc"></i>
+                        </a>
+                        <ul class="tab-submenu" id="nav-${tabID}"></ul>
+                    </li>
+                `);
+            }
+
+            // Iterates over the sub-items of the tab.
+            $(this).children().find('dfn').each(function () {
+
+                // If the sub-item has no children, add it to the container as a link.
+                if ( $(this).is(":last-child") ) {
+                    $(`#nav-${tabID}`).append(`<li>${ $(this).html() }</li>`);
+                }
+
+            });
+        });
+
+        // Adds the basket link from the original header.
+        $("#tabsNav").append(`<li><a href="basket_view.cgi"><i class="fa fa-shopping-basket"></i>${ $(".cart_num_items").text() }</a></li>`);
+
+        // Creates a new submenu with the profile and logout links.
+        $("#tabsNav").append(`
+            <li class="tab-topmenu">
+                <a>
+                    <span>${ $("#logout_userid").text() }</span>
+                    <i class="fa fa-sort-desc"></i>
+                </a>
+                <ul class="tab-submenu">
+                    <li><a href="profile.cgi?force_view=1">My Profile</a></li>
+                    <li><a href="cancel.cgi">Cancel Order</a></li>
+                    <li><a id="submit_logout" href="logout.cgi">Logout</a></li>
+                </ul>
+            </li>
+        `);
+
+        // Moves the logo out of the table nested in the header.
+        $("#header_logo .no_mobile").appendTo("#logoHeader");
+
+        // If user is not viewing the catalog page, insert a link to the catalog.
+        if (!$(".select-items").length) {
+            $("#tabsNav").prepend('<li><a href="catalog.cgi">Back to Catalog</a></li>');
+        }
+    }
+
+    /**
+     * Moves search bar from the left-side tabs container to the standard header.
+     */
+    function moveSearchTop() {
+        $("input#searchfield_input").wrap('<div class="input-wrapper">');
+        $( '<label for="searchfield_input" class="fa fa fa-search"></label>' ).insertAfter("input#searchfield_input");
+
+        if ( $("a[href='basket_view.cgi'].no_mobile").length > 0 ) {
+            $(".input-wrapper:has(#searchfield_input)").first().clone(true,true).insertAfter("a[href='basket_view.cgi'].no_mobile").attr("id", "Srch");
+
+            $( "div#Srch input" ).on("keyup", function(event) {
+                //console.log(event.which);
+                $('.item-search-block input').val( $(this).val() );
+
+                if (event.which == 13) {
+                    $("#submit_catalog_search").trigger("click");
+                }
+            });
+
+            // Add search button next to the search bar
+            $('<button id="search-button">Search</button>').insertAfter("div#Srch input").on("click", function() {
+                $("#submit_catalog_search").trigger("click");
+            });
+        } else {
+            $(".input-wrapper:has(#searchfield_input)").first().clone(true,true).insertAfter( "#pageurl" ).attr("id", "Srch");
+
+            $( "div#Srch input" ).keyup(function(event) {
+                //console.log(event.which);
+                $('.item-search-block input').val( $(this).val() );
+
+                if (event.which == 13) {
+                    $("#submit_catalog_search").trigger("click");
+                }
+            });
+
+            // Add search button next to the search bar
+            $('<button id="search-button">Search</button>').insertAfter("div#Srch input").click(function() {
+                $("#submit_catalog_search").trigger("click");
+            });
+        }
+    }
+    function moveSearchTopFMB() {
+        // If user is viewing the catalog,
+        if ( $(".select-items").length ) {
+
+            // Puts the search box inside a wrapper and moves it to the header.
+            $("input#searchfield_input").wrap('<div class="search-wrapper"><div class="search-flex">');
+            $(".search-wrapper").first().clone(true,true).appendTo("#logoHeader").attr("id", "searchWrapper");
+
+            // Copies all text entered in the new search box over to the old search form.
+            $("#searchWrapper input").on("keyup", function(e) {
+                $(".item-search-block input").val( $(this).val() );
+
+                // If Enter key is pressed, submit the search.
+                if (e.key == "Enter") {
+                    $("#submit_catalog_search").trigger("click");
+                }
+            });
+
+            // Adds a search button that triggers the old search form.
+            $('<button class="head-search">Search</button>')
+                .appendTo("#searchWrapper .search-flex")
+                .on("click", function() {
+                    $("#submit_catalog_search").trigger("click");
+                });
+
+            // Adds a magnifying glass button to toggle the search bar.
+            $('<button class="head-search-toggle"><i class="fa fa-search"></i></button>')
+                .appendTo("#logoHeader")
+                .on("click", function() {
+                    $("#searchWrapper").fadeToggle( 300, "swing" )
+                });
+        }
+    }
+
+    /**
+     * Adjusts the page size to fit a zoomed image, then scrolls it into view.
+     */
+    /*function adjustForImage(event) {
+        let elem = event.target;
+
+        if ( $(elem).closest('.image-wrap').find('input[type=checkbox].zoomCheck').is(':checked') ) {
+            // Gets absolute position of image.
+            let ofs = $(elem).offset();
+
+            // Gets height and width of image, including spacing.
+            let oh = $(elem).outerHeight();
+            let ow = $(elem).outerWidth();
+
+            // Gets bottom margin of copy5 div.
+            let mb = parseInt($("#copy5").css("margin-bottom").replace("px", ""));
+
+            // While the absolute position of the image is overshooting the top of the document (a situation I don't think is possible because it doesn't make any sense for it to be),
+            while (ofs.top < 0) {
+                // Adds 1px at a time to the bottom margin until the top of the image is within the bounds of the document.
+                mb += 1;
+                $("#copy5").css("margin-bottom", mb + "px");
+                ofs = $(elem).offset();
+            }
+
+            let alli = $("div#all_items_view").width();
+            /*
+            
+
+
+
+            while (ofs.left < 0) {
+                alli -= 1;
+                $("div#all_items_view").width(alli);
+                ofs = $(elem).offset();
+            }
+
+            // $(elem).ensureVisible();
+            var topPos = ofs.top - $(window).scrollTop();
+            var rightPos = $(elem)[0].getBoundingClientRect().right  + $(window)['scrollLeft']();
+            var mp = $(elem).parents('.image-container').find('.multi_preview');
+            var bottomPos = $(mp)[0].getBoundingClientRect().bottom + $(window)['scrollTop']();
+
+            // console.log( topPos + " | " + bottomPos + " | " + $(window)['scrollTop']() + " | " + $(window).height() + " | " + ((bottomPos-$(window)['scrollTop']()) >= $(window).height()) );
+
+            if (
+                (rightPos > $(window).width()) || 
+                (topPos < 0) || 
+                ((bottomPos-$(window)['scrollTop']()) > $(window).height())
+            ) {
+                // $(elem).ensureVisible();
+                // $(this).each(function () { $(this)[0].scrollIntoView(); });
+                elem.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+    }*/
+    function WidthAdjuster() {
+        //Scale window to fit based on the item widths
+        if ($('#all_items_view').hasClass('all-items-hide')) {
+            return;
+        }
+
+        var w = $(window).width(),
+            // 'p' is used to prevent the all_items_view from wrapping
+            //  to a new line when the window is around 1030px
+            p = 1,
+            // p = 1,
+            t = $('.responsive_tabs-shell').width(),
+            n = 0;
+
+        if (t < 10) {
+            t = 0;
+        }
+
+        n = 100 - ((t/w) * 100) - p;
+
+        $('#all_items_view').css({
+            'float': 'right',
+            'width': n+'%'
+        });
+    }
+    
+    /**
+     * Replaces the normal PageDNA lightbox zoom with a full-screen image.
+     */
+    function betterImageZoom() {
+        
+        $(".image-container").find("img:first").each(function() {
+            // Removes the link enclosing each main/large thumbnail to disable normal lightbox behaviour.
+            $(this).unwrap();
+            $(this).wrap('<div class="image-wrapper">');
+
+            // Handles zooming images on click.
+            // Note: if changing scale value in CSS, make sure to update scale variable to match.
+            $(this).on("click", function() {
+                let pos = $(this)[0].getBoundingClientRect();
+                let scale = 2;
+
+                // Gets the amount that the image expands on each side.
+                // This allows checking in advance what the new image size will be,
+                // and begin scrolling or translating immediately without having to wait for the transition
+                // event to complete (which results in a ).
+                let widthScale = $(this).innerWidth() / 2;
+                let heightScale = $(this).innerHeight() / 2;
+
+                // If image is overflowing the left or right of the document, pulls it towards the center.
+                if (pos.right + widthScale > $(window).width()) {
+                    $(this).css("right", "unset");
+                }
+
+                if (pos.left - widthScale < 0) {
+                    $(this).css("left", "unset");
+                }
+
+                // Toggles the zoom of the image that was clicked, and removes zoom from any others.
+                $(this).toggleClass("zoomed");
+                $(".zoomed").not(this).removeClass("zoomed");
+
+                // Scrolls image into view if any part is off-screen.
+                // Only performed on zoom-in to avoid moving the viewport back to an element that the user is no longer focused on.
+                if ( $(this).hasClass("zoomed") ) {
+                    let offsetTop = pos.top - heightScale;
+                    let offsetBottom = $(window).height() - (pos.bottom + heightScale);
+
+                    if (offsetTop < 0 || offsetBottom < 0) {
+                        let y = offsetBottom < offsetTop ? Math.abs(offsetBottom) : offsetTop;
+
+                        window.scrollBy({
+                            top: y,
+                            left: 0,
+                            behavior: "smooth"
+                        });
+                    }
+                }
+            });
+        });
+
+$(".multi_preview img").on("click", function() {
+            $(this).closest(".image-container").find(".image-wrapper img").first().attr("src", $(this).attr("src"));
+        });
+    }
+
+    function rearrangeBillingPage() {
+        $("#cc_type_label").insertBefore("#creditcard");
+    }
+
+    /**
+     * Disables clicking the Submit Order button until user explicitly agrees to terms.
+     */
+    function disableSubmitOrder() {
+        if ($("select[name='bill_code10']").val() == "No") {
+            $("button#submit_send_order").prop('disabled', 'disabled');
+            $("button#submit_review_order").prop('disabled', 'disabled');
+        }
+
+        //console.log($("select[name='bill_code10']").val());
+
+        $('form[action="accept_bill.cgi"]').change(function() {
+            if ($("select[name='bill_code10']").val() == "No") {
+                $("button#submit_send_order").prop('disabled', 'disabled');
+            }
+
+            if ($("select[name='bill_code10']").val() == "Yes") {
+                $("button#submit_send_order").prop('disabled', false);
+            }
+
+            //console.log($("select[name='bill_code10']").val());
+        });
+
+        $('form[action="review_bill.cgi"]').change(function() {
+            if ($("select[name='bill_code10']").val() == "No") {
+                $("button#submit_review_order").prop('disabled', 'disabled');
+            }
+
+            if ($("select[name='bill_code10']").val() == "Yes") {
+                $("button#submit_review_order").prop('disabled', false);
+            }
+
+            //console.log($("select[name='bill_code10']").val());
+        });
+
+        //********** Move approval yes/no to just above "Submit Order"*******************
+        $("tr:contains('I have verified and approve this order:')").appendTo($("p.approve_order").parents("tr").parent());
+    }
+
+function wrapQuantityLabels() {
+        $(".qtyspec_label").each(function() {
+            $(this).prev("select").wrap(`<div class="add-to-basket-qtyspec">`).after( $(this) );
+        });
+    }
+
+    $(document).ready(function () {
+        prepare();
+        addFavicons("FMB-favicon_new-150x150.png");
+        betterImageZoom();
+        equalizeItemHeights();
+        moveTabsTopFMB();   // moveTabsTop();
+        moveSearchTopFMB(); // moveSearchTop();
+        rearrangeBillingPage();
+        
+        // disableSubmitOrder();
+        wrapQuantityLabels();
+    });
+</script>

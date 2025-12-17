@@ -1,0 +1,68 @@
+<div class="footer_row3">
+    <div>
+        <img src="con/SF-PoweredBy2024-260w-White.png" alt="Online Storefront Powered by Strategic Factory">
+    </div>
+
+    <p class="footer_cr">
+        Strategic Factory<br>
+        11195 Dolfield Boulevard<br>
+        Owings Mills, Maryland 21117<br>
+        (443) 548-3500<br>
+        <a href="mailto:sfportalorders@strategicfactory.com">sfportalorders@strategicfactory.com</a>
+    </p>
+</div>
+
+<script>
+    function tabsToNav() {
+        
+    }
+
+    /**
+     * Sets the height of each item in the selector to the height of the tallest item.
+     */
+    function setSelectorHeight(selector) {
+        let maxHeight = 0;
+
+        $(selector).each(function() {
+            if ( $(this).height() > maxHeight ) {
+                maxHeight = $(this).height();
+            }
+        });
+
+        $(selector).css("height", `${ Math.ceil(maxHeight) }px`);
+    }
+
+    /**
+     * Makes all catalog products the same height by equalizing the height of each component across all items.
+     */
+    function equalizeItemHeights() {
+        // Adds a thumbnail container to any item that doesn't already have one.
+        $(".image-container:not(:has(.multi_preview))").append(`<div class="multi_preview">`);
+
+        // If there are any items on the page that have tiny thumbnails:
+        // Adds the current image as a tiny thumbnail to items that don't already have one.
+        if ( $(".multi_preview").find("img").length !== 0 ) {
+            $(".multi_preview:not(:has(img))").each(function() {
+                $(this).append(`<img class="catalog-tiny-thumbnail" src="${ $(this).siblings("a").find("img").attr("src") }" />`);
+            });
+        }
+
+        // Wraps the pricing and onhand lines together to avoid awkward spacing.
+        $(".height-adjuster").each(function() {
+            let wrapper = $(`<div class="product__stock">`)
+                .insertBefore( $(this).find(".responsive-pricing").first() );
+
+            $(this).find(".responsive-pricing, .responsive-onhand").appendTo(wrapper);
+        });
+
+        setSelectorHeight(".responsive-longname");
+        setSelectorHeight(".responsive-choose-info");
+    }
+
+
+
+    $(document).ready(function() {
+        tabsToNav();
+        equalizeItemHeights();
+    });
+</script>

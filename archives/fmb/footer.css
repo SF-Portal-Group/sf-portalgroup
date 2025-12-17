@@ -1,0 +1,47 @@
+.note {
+    font-family: Afacad, sans-serif;
+}
+
+.responsive-onhand {
+    margin-top: 5px;
+}
+
+.add-to-basket-qtyspec {
+    border: 1px solid #D0D5DD;
+    border-radius: 6px;
+    padding-right: 1.2rem;
+    width: fit-content;
+}
+
+.add-to-basket-qtyspec:focus-within {
+    outline: 1px auto #333;
+}
+
+.add-to-basket-qtyspec select {
+    border: 0;
+    outline: 0;
+}
+
+input.sbs_update_field.sbs_block_field:read-only, td.input input:read-only {
+    background-color: #EFEFEF;
+    outline: 0;
+}
+
+div.form-body div.title > h1 {
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+}
+
+body > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    flex-grow: 1;
+    width: 50vw;
+}
