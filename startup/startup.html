@@ -13,8 +13,19 @@
 </div>
 
 <script>
+    /**
+     * Changes classes and deletes inline styles to prepare the site for proper CSS application.
+     */
+    function normalize() {
+        // Doesn't seem to work; it appears to put back the inline styles every time the viewport size changes??????
+        // $("#all_items_view").removeAttr("style");
+    }
+
+    /**
+     * Creates a header nav with the catalog tabs and links, and hides the original header and tabs container.
+     */
     function tabsToNav() {
-        
+    
     }
 
     /**
@@ -62,6 +73,7 @@
 
 
     $(document).ready(function() {
+        normalize();
         tabsToNav();
         equalizeItemHeights();
     });

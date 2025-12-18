@@ -1,30 +1,41 @@
 /************************************************************************/
 /*
+/*      TABLE OF CONTENTS
+/*
+/************************************************************************/
+/*
+/*      Global Styles
+/*          Header
+/*          Main
+/*          Footer
+/*      Catalog
+/*          Products
+/*          Separators
+
+/************************************************************************/
+/*
 /*      GLOBAL STYLES
 /*
 /************************************************************************/
 
 body {
-    color: #5b5b5b;
-    font-family: Montserrat, sans-serif;
+    color: #404040;
+    font-family: Syne, sans-serif;
     font-size: 16px;
 
     /* Fixes issue where footer floats off the bottom if page is too short. */
     min-height: 100vh;
 }
 
+button {
+    cursor: pointer;
+}
+
 body > .container {
+    /* Fixes issue where footer floats off the bottom if page is too short. */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.main {
-    flex-grow: 1;
-}
-
-button {
-    cursor: pointer;
 }
 
 .button {
@@ -39,6 +50,61 @@ button {
 .button:hover {
     background-color: #000f02;
 }
+
+/* ****************************** HEADER ****************************** */
+
+#header-wrapper {
+    display: none;
+}
+
+.nav {
+    color: #000f02;
+    display: flex;
+    font-size: 17px;
+    font-weight: 600;
+    gap: 24px;
+    list-style: none;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: #dd2d85;
+}
+
+.nav__tab-menu {
+    background-color: #FFF;
+}
+
+.nav__tab-menu:hover .nav__tab-sub {
+    visibility: visible;
+}
+
+.nav__tab-sub {
+    list-style: none;
+    padding: 20px 12px;
+    padding-inline-start: 0;
+    position: absolute;
+    visibility: hidden;
+}
+
+/* ******************************* MAIN ******************************* */
+
+.main {
+    /* Fixes issue where footer floats off the bottom if page is too short. */
+    flex-grow: 1;
+
+    /* Fixes issue where original CSS uses !important to add margin. */
+    margin-top: 0 !important;
+}
+
+.main p {
+    margin-left: unset;
+}
+
+/* ****************************** FOOTER ****************************** */
 
 .footnote {
     background-color: #000;
@@ -71,8 +137,18 @@ button {
 /*
 /************************************************************************/
 
+.select-items .pagetitle {
+    display: none;
+}
+
 .responsive_tabs-shell {
     display: none;
+}
+
+#all_items_view {
+    /* Fixes issue where inline styles were used to force non-responsive layout. */
+    float: unset !important;
+    width: unset !important;
 }
 
 .main-section {
@@ -82,25 +158,104 @@ button {
 }
 
 #copy3, #copy2 {
-    /* Prevents the tab blurbs from acting like catalog items. */
+    /* Prevents the tab blurbs from acting like catalog items and taking up flex slots. */
     flex-basis: 100%;
 }
 
+/* ***************************** PRODUCTS ***************************** */
+
 .stretchy_cols {
     max-height: unset;
+    max-width: unset;
+    min-height: unset;
+    width: 380px;
+}
+
+.image-container {
+    margin-bottom: 5px;
+}
+
+.select-items .image-container img {
+    /* Not good practice to add margin to each image */
+    margin: 0;
 }
 
 img.catalog-tiny-thumbnail {
     height: 40px;
 }
 
+.responsive-longname, .responsive-choose-info {
+    align-items: center;
+    display: flex;
+}
+
 .responsive-longname {
-    font-family: Syne, sans-serif;
     margin-bottom: 5px;
 }
 
 .responsive-choose-info {
+    font-family: Montserrat, sans-serif;
     margin-bottom: 5px;
+    max-height: unset;
+}
+
+.responsive-choose-info p {
+    margin: 0;
+}
+
+.responsive-choose-info p:has(+ p) {
+    margin-bottom: 5px;
+}
+
+/* **************************** SEPARATORS **************************** */
+
+.stretchy_cols[id^=scroll_to_separator] {
+    background-color: #dd2d85;
+    color: #FFF;
+    flex-basis: 100%;
+    font-size: 27px;
+    height: 40px;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+[id^=scroll_to_separator] .height-adjuster {
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+
+[id^=scroll_to_separator] .responsive-longname {
+    margin-bottom: 0;
+}
+
+[id^=scroll_to_separator] .image-container,
+[id^=scroll_to_separator] .responsive-choose-info,
+[id^=scroll_to_separator] .product__stock,
+[id^=scroll_to_separator] .responsive-tagcheck,
+[id^=scroll_to_separator] .menu-knob-wrapper {
+    display: none;
+}
+
+
+
+/************************************************************************/
+/*
+/*      NAV OPTION: SIDE-BY-SIDE
+/*
+/************************************************************************/
+
+header nav {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1480px;
+    padding: 24px 0;
+}
+
+header nav img {
+    height: 42px;
 }
 
 
@@ -117,5 +272,10 @@ img.catalog-tiny-thumbnail {
 
 .stretchy_cols {
     border-radius: 10px;
-    box-shadow: 1px 1px 20px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+}
+
+[id^=scroll_to_separator] {
+    border-radius: 0;
 }
