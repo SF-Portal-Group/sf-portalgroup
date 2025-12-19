@@ -1,68 +1,150 @@
 /************************************************************************/
 /*
-/*      TABLE OF CONTENTS
-/*
-/************************************************************************/
-/*
-/*      Global Styles
-/*          Header
-/*          Main
-/*          Footer
-/*      Catalog
-/*          Products
-/*          Separators
-
-/************************************************************************/
-/*
-/*      GLOBAL STYLES
+/*      CORE
+/*      I highly recommend not changing these settings. They are either
+/*      necessary for the main scripts OR related to fixing display issues.
 /*
 /************************************************************************/
 
+/* Fixes issue where footer floats off the bottom if page is too short */
 body {
-    /* color: #555; */
-    /* font-family: sans-serif; */
-    /* font-size: 16px; */
-
-    /* Fixes issue where footer floats off the bottom if page is too short */
     min-height: 100vh;
 }
 
-button {
-    cursor: pointer;
-}
-
 body > .container {
-    /* Fixes issue where footer floats off the bottom if page is too short */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.button {
-    /* background-color: #EEE; */
-    border: unset;
-    /* border-radius: 6px; */
-    /* color: #111; */
-    /* font-weight: 500; */
-    padding: 10px 16px;
+.main {
+    flex-grow: 1;
+    margin-top: unset !important;
 }
 
-.button:hover {
-    /* background-color: #111; */
+/* For some reason default button cursor is regular arrow? */
+button {
+    cursor: pointer;
 }
 
-/* ****************************** HEADER ****************************** */
+/* ***************************** CATALOG ****************************** */
 
+/* Removes unnecessary padding on container */
+.select-items {
+    padding-bottom: unset;
+}
+
+/* Hides default "Catalog" page header */
+.select-items .pagetitle {
+    display: none;
+}
+
+#copy5 {
+    margin: unset;
+}
+
+/* Displays the catalog products with flex layout. */
+.main-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Prevents the tab blurbs from acting like catalog items and taking up flex slots. */
+#copy3, #copy2 {
+    flex-basis: 100%;
+}
+
+/* ***************************** PRODUCTS ***************************** */
+
+/* Stops restricting the size of product cards */
+.stretchy_cols {
+    max-height: unset;
+    max-width: unset;
+    min-height: unset;
+}
+
+/* Not good practice to add margin to each image element directly */
+.select-items .image-container img {
+    margin: unset;
+}
+
+/* Vertically centers short titles and descriptions */
+.responsive-longname, .responsive-choose-info {
+    align-items: center;
+    display: flex;
+}
+
+/* Stops restricting the height of product descriptions */
+.responsive-choose-info {
+    max-height: unset;
+}
+
+/* Eliminates automatic margin around paragraphs */
+.responsive-choose-info p {
+    margin: unset;
+}
+
+/* **************************** SEPARATORS **************************** */
+
+/* Forces full-width layout */
+.stretchy_cols[id^=scroll_to_separator] {
+    flex-basis: 100%;
+    padding: 0;
+}
+
+/* Ensures that the titles stay vertically centered */
+[id^=scroll_to_separator] .height-adjuster {
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+
+/* Hides all sections except title */
+[id^=scroll_to_separator] .height-adjuster > *:not(.responsive-longname) {
+    display: none;
+}
+
+[id^=scroll_to_separator] .responsive-longname {
+    margin-bottom: 0;
+}
+
+/* ****************************** FOOTER ****************************** */
+
+/* Hides the extra footer div */
+.footer {
+    display: none;
+}
+
+/* Correctly positions the SF logo and contact info */
+.footer_row3 {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+/************************************************************************/
+/*
+/*      HEADER NAV BAR
+/*      Delete this section if you want to use the original tabs sidebar.
+/*
+/************************************************************************/
+
+/* Hides original page header. */
 #header-wrapper {
     display: none;
 }
 
-.nav {
-    /* color: #000f02; */
+header nav {
+    align-items: center;
     display: flex;
-    /* font-size: 17px; */
-    /* font-weight: 600; */
-    gap: 24px;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.nav {
+    display: flex;
     list-style: none;
 }
 
@@ -70,35 +152,139 @@ body > .container {
     text-decoration: none;
 }
 
-.nav a:hover {
-    color: #dd2d85;
+.nav__tab-drop {
+    position: relative;
 }
 
-.nav__tab-menu:hover .nav__tab-sub {
-    visibility: visible;
-}
-
-.nav__tab-sub {
-    background-color: #FFF;
+.nav__tab-menu {
     list-style: none;
-    padding: 20px 12px;
     padding-inline-start: 0;
     position: absolute;
     visibility: hidden;
 }
 
-/* ******************************* MAIN ******************************* */
-
-.main {
-    /* Fixes issue where footer floats off the bottom if page is too short. */
-    flex-grow: 1;
-
-    /* Fixes issue where original CSS uses !important to add margin. */
-    margin-top: unset !important;
+/* Reveals submenus when hovering over parent tabs. */
+.nav__tab-drop:hover .nav__tab-menu {
+    visibility: visible;
 }
 
-.main p {
-    margin-left: unset;
+/* Hides original tabs container. */
+.responsive_tabs-shell {
+    display: none;
+}
+
+/* Stops product container from being forced to the right. */
+#all_items_view {
+    float: unset !important;
+    width: unset !important;
+}
+
+
+
+/************************************************************************/
+/*
+/*      STYLES
+/*      Everything below can be changed freely. (though make sure to test 
+/*      before deleting in case there is an underlying PDNA default style)
+/*      Commonly used attributes are given as a base.
+/*
+/************************************************************************/
+
+body {
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+.button {
+    background-color: #444;
+    border: unset;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: 500;
+    padding: 7px 13px;
+}
+
+.button:hover {
+    background-color: #111;
+}
+
+/* ****************************** HEADER ****************************** */
+
+header nav {
+    max-width: 1480px;
+    padding: 24px 0;
+}
+
+header nav img {
+    height: 42px;
+}
+
+.nav {
+    color: #111;
+    font-size: 15px;
+    font-weight: 600;
+    gap: 25px;
+}
+
+.nav a {
+    padding: 0 12px;
+}
+
+.nav a:hover {
+    color: #666;
+}
+
+.nav__tab-menu {
+    background-color: #FFF;
+}
+
+.nav__tab-menu li {
+    min-width: 150px;
+    padding: 20px 0px;
+}
+
+/* ******************************* MAIN ******************************* */
+
+.main-section {
+    justify-content: center;
+}
+
+/* ***************************** PRODUCTS ***************************** */
+
+.stretchy_cols {
+    width: 360px;
+}
+
+.image-container {
+    margin-bottom: 5px;
+}
+
+img.catalog-tiny-thumbnail {
+    height: 40px;
+}
+
+.responsive-longname {
+    margin-bottom: 5px;
+}
+
+.responsive-choose-info {
+    margin-bottom: 5px;
+}
+
+.responsive-choose-info p:has(+ p) {
+    margin-bottom: 5px;
+}
+
+/* **************************** SEPARATORS **************************** */
+
+.stretchy_cols[id^=scroll_to_separator] {
+    background-color: #EEE;
+    border-radius: 0;
+    color: #111;
+    font-size: 24px;
+    height: 40px;
+    text-transform: uppercase;
 }
 
 /* ****************************** FOOTER ****************************** */
@@ -112,144 +298,13 @@ body > .container {
 }
 
 .footnote a:hover {
-    font-style: italic;
+    color: #DDD;
     text-decoration: none;
 }
 
 .footer_row3 {
-    align-items: center;
-    display: flex;
-    gap: 30px;
     font-family: "Noto Sans", sans-serif;
     font-size: 14px;
-    justify-content: center;
+    gap: 30px;
     padding: 30px 0;
-}
-
-
-
-/************************************************************************/
-/*
-/*      CATALOG
-/*
-/************************************************************************/
-
-.select-items .pagetitle {
-    display: none;
-}
-
-.responsive_tabs-shell {
-    display: none;
-}
-
-#all_items_view {
-    /* Fixes issue where inline styles were used to force non-responsive layout. */
-    float: unset !important;
-    width: unset !important;
-}
-
-.main-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-#copy3, #copy2 {
-    /* Prevents the tab blurbs from acting like catalog items and taking up flex slots. */
-    flex-basis: 100%;
-}
-
-/* ***************************** PRODUCTS ***************************** */
-
-.stretchy_cols {
-    max-height: unset;
-    max-width: unset;
-    min-height: unset;
-    width: 360px;
-}
-
-.image-container {
-    margin-bottom: 5px;
-}
-
-.select-items .image-container img {
-    /* Not good practice to add margin to each image element directly */
-    margin: unset;
-}
-
-img.catalog-tiny-thumbnail {
-    height: 40px;
-}
-
-.responsive-longname, .responsive-choose-info {
-    align-items: center;
-    display: flex;
-}
-
-.responsive-longname {
-    margin-bottom: 5px;
-}
-
-.responsive-choose-info {
-    margin-bottom: 5px;
-    max-height: unset;
-}
-
-.responsive-choose-info p {
-    margin: 0;
-}
-
-.responsive-choose-info p:has(+ p) {
-    margin-bottom: 5px;
-}
-
-/* **************************** SEPARATORS **************************** */
-
-.stretchy_cols[id^=scroll_to_separator] {
-    /* background-color: #000; */
-    /* color: #FFF; */
-    flex-basis: 100%;
-    /* font-size: 27px; */
-    /* height: 40px; */
-    padding: 0;
-    text-transform: uppercase;
-}
-
-[id^=scroll_to_separator] .height-adjuster {
-    align-items: center;
-    display: flex;
-    height: 100%;
-}
-
-[id^=scroll_to_separator] .responsive-longname {
-    margin-bottom: 0;
-}
-
-[id^=scroll_to_separator] .image-container,
-[id^=scroll_to_separator] .responsive-choose-info,
-[id^=scroll_to_separator] .product__stock,
-[id^=scroll_to_separator] .responsive-tagcheck,
-[id^=scroll_to_separator] .menu-knob-wrapper {
-    display: none;
-}
-
-
-
-/************************************************************************/
-/*
-/*      NAV OPTION: SIDE-BY-SIDE
-/*
-/************************************************************************/
-
-header nav {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    max-width: 1480px;
-    padding: 24px 0;
-}
-
-header nav img {
-    height: 42px;
 }

@@ -15,7 +15,7 @@ $(`#tab_responsive_tabs [id^="tab_"]`).each(function() {
     // If it does have sub-items, add it to the nav as a hoverable container.
     else {
         let menu = $(`
-            <li class="nav__tab-menu">
+            <li class="nav__tab-drop">
                 <a>
                     <span>${ $(this).find("dfn").first().text() }</span>
                     <i class="fa fa-sort-desc"></i>
@@ -23,7 +23,7 @@ $(`#tab_responsive_tabs [id^="tab_"]`).each(function() {
             </li>
         `);
 
-        let sub = $(`<ul class="nav__tab-sub">`);
+        let sub = $(`<ul class="nav__tab-menu">`);
 
         // For each child tab:
         $(this).children().find('dfn').each(function() {
@@ -43,13 +43,14 @@ $(".nav").append(`<li><a href="basket_view.cgi"><i class="fa fa-shopping-basket"
 
 // Create a new submenu with the profile and logout links.
 $(".nav").append(`
-    <li class="nav__tab-menu">
+    <li class="nav__tab-drop">
         <a>
             <span>${ $("#logout_userid").text() }</span>
             <i class="fa fa-sort-desc"></i>
         </a>
-        <ul class="nav__tab-sub">
+        <ul class="nav__tab-menu">
             <li><a href="profile.cgi?force_view=1">My Profile</a></li>
+            <li><a href="cancel.cgi">Cancel Order</a></li>
             <li><a id="submit_logout" href="logout.cgi">Logout</a></li>
         </ul>
     </li>
